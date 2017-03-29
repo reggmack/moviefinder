@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MovieService } from '../../services/movie.service'
 
 @Component({
   moduleId: module.id,
@@ -7,5 +8,16 @@ import { Component } from '@angular/core';
   styleUrls: ['movies.component.css']
 })
 export class MoviesComponent {
-  title = 'app works!';
+    popularList: Array<Object>;
+    theatersList: Array<Object>;
+
+    constructor(private _movieService: MovieService){
+        this._movieService.getPopular().subscribe(res => {
+            this.popularList = res.results;
+        });
+
+        this._movieService.getInTheaters().subscribe(res => {
+            this.theatersList = res.results;
+        });
+    }
 }
